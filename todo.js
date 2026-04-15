@@ -30,7 +30,7 @@ function menuVoltar() {
   console.log("====================");
   interagirSecundario();
 }
-
+// Limpa o console, exibe as opções, aguarda a resposta e se for inválida exibe a msg de erro e volta para o menu
 function interagir() {
   rl.question("Escolha uma opção: ", function (resposta) {
     console.clear();
@@ -47,7 +47,7 @@ function interagir() {
     }
   });
 }
-
+// Assim como o interagir principal, mas para os submenus, com Sair e Voltar
 function interagirSecundario() {
   rl.question("Escolha uma opção: ", function (resposta) {
     console.clear();
@@ -57,7 +57,7 @@ function interagirSecundario() {
     menuVoltar();
   });
 }
-
+// Lista as tarefas, se não tiver nenhuma, exibe a msg de Sem Tarefas, além do submenu de Voltar e Sair
 function listarTarefas() {
   console.log("| TAREFAS");
   if (tarefas.length === 0) {
@@ -67,7 +67,9 @@ function listarTarefas() {
   }
   menuVoltar();
 }
-
+// Começa pedindo o nome da tarefa, pois é sempre undefined na primeira chamada. Testa se é repetido via 'some', ignorando maísculas
+// e minúsculas. Se for repetido, exibe msg de erro e volta ao menu principal. Se não for repetido,
+// adiciona a tarefa no array com id, nome e status Nao Concluido, exibe a mensagem de sucesso e volta para o menu principal
 function adicionarTarefa(nomeDaTarefa) {
   if (nomeDaTarefa === undefined) {
     console.log("| ADICIONAR TAREFA");
@@ -76,11 +78,21 @@ function adicionarTarefa(nomeDaTarefa) {
     });
     return;
   }
-  tarefas.push({ id: proximoId++, nome: nomeDaTarefa, status: "Nao concluido" });
-  console.log("Tarefa adicionada com sucesso!");
-  menu();
+    
+  const jaExiste = tarefas.some(t => t.nome.toLowerCase() === nomeDaTarefa.toLowerCase());
+
+  if (jaExiste) {
+    console.log("Erro: Já existe uma tarefa com este nome!");
+    menuVoltar();
+} else {
+    tarefas.push({ id: proximoId++, nome: nomeDaTarefa, status: "Nao concluido" });
+    console.log("Tarefa adicionada com sucesso!");
+    menu();
 }
 
+// Começa pedindo o ID ou o Nome da tarefa, pois é sempre undefined na primeira chamada.
+// Recebe o ID ou o Nome, procura no array via findIndex, se não encontrar exibe msg de erro
+// Se encontrar, muda o status para Concluído, exibe a mensagem de sucesso e volta para o menu principal
 function concluirTarefa(entrada) {
   if (entrada === undefined) {
     console.log("| CONCLUIR TAREFA");
@@ -103,7 +115,11 @@ function concluirTarefa(entrada) {
   }
   menu();
 }
-
+// Começa pedindo o ID ou Nome da tarefa, pois é sempre undefined na primeira chamada.
+// Recebe o ID ou o Nome, preocura no array via findIndex, buscando o ID como valor numérico previamente fornecido pra lista de tarefas,
+// ou o Nome, ignorando maiúsculas e minúsculas. Se não encontrar, exibe msg de erro
+// Se encontrar, cria a const removida, usando splice no index encontrado do array tarefas
+// e exibe a msg de sucesso com o nome da tarefa removida
 function removerTarefa(entrada) {
   if (entrada === undefined) {
     console.log("| REMOVER TAREFA");
@@ -126,7 +142,7 @@ function removerTarefa(entrada) {
   }
   menu();
 }
-
+}
 function principal() {
   console.clear();
   boasVindas();
