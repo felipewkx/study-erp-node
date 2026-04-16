@@ -66,7 +66,7 @@ function listarTarefas() {
 }
 // Começa pedindo o nome da tarefa, pois é sempre undefined na primeira chamada. Testa se é repetido via 'some', ignorando maísculas
 // e minúsculas. Se for repetido, exibe msg de erro e volta ao menu principal. Se não for repetido,
-// adiciona a tarefa no array com id, nome e status Nao Concluido, exibe a mensagem de sucesso e volta para o menu principal
+// adiciona a tarefa no array com id, nome e status Pendente, exibe a mensagem de sucesso e volta para o menu principal
 function adicionarTarefa(nomeDaTarefa) {
     if (nomeDaTarefa === undefined) {
         console.log("| ADICIONAR TAREFA");
@@ -80,7 +80,7 @@ function adicionarTarefa(nomeDaTarefa) {
         console.log("Erro: Já existe uma tarefa com este nome!");
         menuVoltar();
     } else {
-        tarefas.push({ id: proximoId++, nome: nomeDaTarefa, status: "Nao concluido" });
+        tarefas.push({ id: proximoId++, nome: nomeDaTarefa, status: "Pendente" });
         console.log("Tarefa adicionada com sucesso!");
         menu();
     }
@@ -106,16 +106,16 @@ function concluirTarefa(entrada) {
   if (index === -1) {
     console.log("Tarefa não encontrada!");
   } else {
-    tarefas[index].status = "Concluido";
+    tarefas[index].status = "Concluído";
     console.log(`Tarefa '${tarefas[index].nome}' marcada como Concluído!`);
   }
   menu();
 }
 // Começa pedindo o ID ou Nome da tarefa, pois é sempre undefined na primeira chamada.
 // Recebe o ID ou o Nome, preocura no array via findIndex, buscando o ID como valor numérico previamente fornecido pra lista de tarefas,
-// ou o Nome, ignorando maiúsculas e minúsculas. Se não encontrar, exibe msg de erro
-// Se encontrar, cria a const removida, usando splice no index encontrado do array tarefas
-// e exibe a msg de sucesso com o nome da tarefa removida
+// ou o Nome, ignorando maiúsculas e minúsculas. Se encontrar, cria a const removida, e remove a tarefa do array via splice,
+// passando o index encontrado e a quantidade de itens a remover (1), pois o index anteriormente encontrado é a tarefa a ser removida.
+// Depois disso exibe a msg de sucesso com o nome da tarefa removida. Se não encontrar, exibe msg de erro. Por fim, volta ao menu principal.
 function removerTarefa(entrada) {
   if (entrada === undefined) {
     console.log("| REMOVER TAREFA");
@@ -125,17 +125,17 @@ function removerTarefa(entrada) {
     return;
   }
 
-  const index = tarefas.findIndex(t => 
-    t.id === parseInt(entrada) || 
-    t.nome.toLowerCase() === entrada.toLowerCase()
-  );
+const index = tarefas.findIndex(t => 
+  t.id === parseInt(entrada) || 
+  t.nome.toLowerCase() === entrada.toLowerCase()
+);
 
-  if (index === -1) {
-    console.log("Tarefa não encontrada!");
-  } else {
-    const removida = tarefas.splice(index, 1);
-    console.log(`Tarefa '${removida[0].nome}' removida com sucesso!`);
-  }
+if (index !== -1) {
+  const removida = tarefas.splice(index, 1);
+  console.log(`Tarefa "${removida[0].nome}" removida com sucesso!`);
+} else {
+  console.log("Tarefa não encontrada.");
+}
   menu();
 }
 
