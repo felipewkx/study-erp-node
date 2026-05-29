@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1778712433367,
+    "nome": "Felipe Walker",
+    "email": "felipe@gmail.com",
+    "categoria": "VIP"
+  },
+  {
+    "id": 1778712445599,
+    "nome": "Marcela",
+    "email": "marcela@hotmail.com",
+    "categoria": "COMUM"
+  },
+  {
+    "id": 1778712464527,
+    "nome": "Pedro",
+    "email": "pedro@gmail.com",
+    "categoria": "COMUM"
+  },
+  {
+    "id": 1778712488330,
+    "nome": "Joaquim",
+    "email": "joaquim@hotmail.com",
+    "categoria": "COMUM"
+  },
+  {
+    "id": 1778712497850,
+    "nome": "Alex",
+    "email": "alex@gmail.com",
+    "categoria": "VIP"
+  },
+  {
+    "id": 1778714161824,
+    "nome": "Felipe Walker",
+    "email": "felipe@gmail.com",
+    "categoria": "VIP"
+  }
+]
